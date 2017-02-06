@@ -8,7 +8,7 @@ Pokemon and being awkward developers.
 Users can run around at events like hackathons taking pictures with all their new friends. Using facial recognition we can uniquely identify anyone in our database, and if they aren't in our database you just caught a new Pokemo.... I mean person! Take a picture of anyone to get their name, social media links etc.
 
 ## How we built it
-The mobile app is built for iOS using swift and back-end with node.js
+The mobile app is built for iOS using swift, Android using java and back-end with node.js
 
 ## Challenges we ran into
 Turns out there is actually a max size you can send of HTTP post requests which was a present surprise, also testing on production is the new meme.

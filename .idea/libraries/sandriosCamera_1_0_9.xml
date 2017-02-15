@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="sandriosCamera-1.0.9">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sandrios.android/sandriosCamera/1.0.9/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sandrios.android/sandriosCamera/1.0.9/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sandrios.android/sandriosCamera/1.0.9/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sandrios.android/sandriosCamera/1.0.9/25fd6e0b31601c2bd2ef4daebf258350087718d8/sandriosCamera-1.0.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

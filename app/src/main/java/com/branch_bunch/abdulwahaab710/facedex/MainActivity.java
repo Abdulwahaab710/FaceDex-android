@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.sandrios.sandriosCamera.internal.SandriosCamera;
@@ -17,37 +16,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int CAPTURE_MEDIA = 368;
 
     private Activity activity;
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.withPicker:
-                    new SandriosCamera(activity, CAPTURE_MEDIA)
-                            .setShowPicker(true)
-                            .setVideoFileSize(20)
-                            .setMediaAction(CameraConfiguration.MEDIA_ACTION_BOTH)
-                            .enableImageCropping(true)
-                            .launchCamera();
-                    break;
-                case R.id.withoutPicker:
-                    new SandriosCamera(activity, CAPTURE_MEDIA)
-                            .setShowPicker(false)
-                            .setMediaAction(CameraConfiguration.MEDIA_ACTION_PHOTO)
-                            .enableImageCropping(false)
-                            .launchCamera();
-                    break;
-            }
-        }
-    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         activity = this;
-
-        findViewById(R.id.withPicker).setOnClickListener(onClickListener);
-        findViewById(R.id.withoutPicker).setOnClickListener(onClickListener);
+        new SandriosCamera(activity, CAPTURE_MEDIA)
+                .setShowPicker(false)
+                .setMediaAction(CameraConfiguration.MEDIA_ACTION_PHOTO)
+                .enableImageCropping(false)
+                .launchCamera();
     }
 
     @Override

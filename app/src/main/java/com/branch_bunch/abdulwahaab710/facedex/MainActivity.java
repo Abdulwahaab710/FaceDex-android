@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.sandrios.sandriosCamera.internal.SandriosCamera;
 import com.sandrios.sandriosCamera.internal.configuration.CameraConfiguration;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -34,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CAPTURE_MEDIA && resultCode == RESULT_OK) {
-            Log.e("File", "" + data.getStringExtra(CameraConfiguration.Arguments.FILE_PATH));
+            Log.d("File", "" + data.getStringExtra(CameraConfiguration.Arguments.FILE_PATH));
             Toast.makeText(this, "Media captured.", Toast.LENGTH_SHORT).show();
+            new SendRequests().doInBackground(data.getStringExtra(CameraConfiguration.Arguments.FILE_PATH));
         }
     }
 }

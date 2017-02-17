@@ -33,6 +33,7 @@ import java.net.URLEncoder;
 
 public class SendRequests extends AsyncTask<String, Void, String[]>{
 
+    public String[] out;
         // Create GetText Metod
         public  void  GetText(String filePath) throws IOException {
 
@@ -95,20 +96,23 @@ public class SendRequests extends AsyncTask<String, Void, String[]>{
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("image", base64img);
             String data = jsonObject.toString();
+
             URL url = new URL("http://face-dex.herokuapp.com/recognize");
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
             connection.setFixedLengthStreamingMode(data.getBytes().length);
             connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            connection.connect();
+
             OutputStream out = new BufferedOutputStream(connection.getOutputStream());
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
             writer.write(data);
             writer.flush();
             writer.close();
             out.close();
-            connection.connect();
 
             InputStream in = new BufferedInputStream(connection.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -120,13 +124,27 @@ public class SendRequests extends AsyncTask<String, Void, String[]>{
             }
             in.close();
             String result = sb.toString();
-            Log.d("Vicky", "Response from php = " + result);
-            //Response = new JSONObject(result);
+            Log.d("Response", "Response from php = " + result);
+            // Response = new JSONObject(result);
             connection.disconnect();
         } catch (Exception e) {
-            Log.d("Vicky", "Error Encountered");
+            Log.e("Error", "Error Encountered");
             e.printStackTrace();
         }
         return new String[]{"done", "h1"};
     }
+
+
+    @Override
+    protected void onPostExecute(String[] result) {
+        String[] urlList = out;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        // TODO Auto-generated method stub
+        super.onPreExecute();
+        // do something  // show some progress of loading images
+    }
+
 }

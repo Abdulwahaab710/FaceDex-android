@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == CAPTURE_MEDIA && resultCode == RESULT_OK) {
             Log.d("File", "" + data.getStringExtra(CameraConfiguration.Arguments.FILE_PATH));
             Toast.makeText(this, "Media captured.", Toast.LENGTH_SHORT).show();
-            new SendRequests().doInBackground(data.getStringExtra(CameraConfiguration.Arguments.FILE_PATH));
+            new SendRequests().execute(data.getStringExtra(CameraConfiguration.Arguments.FILE_PATH));
+            
         }
     }
 }

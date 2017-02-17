@@ -31,51 +31,8 @@ import java.net.URLEncoder;
  * Created by Abdulwahaab710 on 2017-02-15.
  */
 
-public class SendRequests extends AsyncTask<String, Void, String[]>{
-
-    public String[] out;
+public class SendRequests extends AsyncTask<String, Void, String>{
         // Create GetText Metod
-        public  void  GetText(String filePath) throws IOException {
-
-            Bitmap bm = BitmapFactory.decodeFile(filePath);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-            byte[] byteArrayImage = baos.toByteArray();
-            String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-
-            // Defined URL  where to send data
-            URL url = new URL("https://face-dex.herokuapp.com/recognize");
-            HttpURLConnection client = null;
-            try {
-                client = (HttpURLConnection) url.openConnection();
-                client.setRequestMethod("POST");
-                client.setRequestProperty("image",encodedImage);
-                client.setDoOutput(true);
-                OutputStream outputPost = new BufferedOutputStream(client.getOutputStream());
-                Log.e("out: ", String.valueOf(outputPost));
-                outputPost.flush();
-                outputPost.close();
-            }
-            catch(MalformedURLException error) {
-                //Handles an incorrectly entered URL
-                Log.e("MalformedURLException: ", String.valueOf(error));
-            }
-            catch(SocketTimeoutException error) {
-                //Handles URL access timeout.
-                Log.e("SocketTimeoutException ", String.valueOf(error));
-            }
-            catch (IOException error) {
-                //Handles input and output errors
-                Log.e("IOException ", String.valueOf(error));
-            }
-            finally {
-                if(client != null) // Make sure the connection is not null.
-                    client.disconnect();
-            }
-
-
-
-    }
 
     public static String encodeImage(Bitmap thumbnail) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -86,24 +43,26 @@ public class SendRequests extends AsyncTask<String, Void, String[]>{
     }
 
     @Override
-    protected String[] doInBackground(String... path) {
+    protected String doInBackground(String... path) {
+        String result = new String();
         try {
             //File img = new File(String.valueOf(path));
-            Log.e("File path", path[0]);
+            //
+            // Log.e("File path", path[0]);
             Bitmap bitimg = BitmapFactory.decodeFile(path[0]);
             String base64img = encodeImage(bitimg);
-            Log.e("base64", base64img);
+            //Log.e("base64", base64img);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("image", base64img);
             String data = jsonObject.toString();
 
-            URL url = new URL("http://face-dex.herokuapp.com/recognize");
+            URL url = new URL("https://face-dex.herokuapp.com/recognize");
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
-            connection.setFixedLengthStreamingMode(data.getBytes().length);
+//            connection.setFixedLengthStreamingMode(data.getBytes().length);
             connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             connection.connect();
 
@@ -123,7 +82,7 @@ public class SendRequests extends AsyncTask<String, Void, String[]>{
                 sb.append(line);
             }
             in.close();
-            String result = sb.toString();
+            result = sb.toString();
             Log.d("Response", "Response from php = " + result);
             // Response = new JSONObject(result);
             connection.disconnect();
@@ -131,13 +90,7 @@ public class SendRequests extends AsyncTask<String, Void, String[]>{
             Log.e("Error", "Error Encountered");
             e.printStackTrace();
         }
-        return new String[]{"done", "h1"};
-    }
-
-
-    @Override
-    protected void onPostExecute(String[] result) {
-        String[] urlList = out;
+        return result;
     }
 
     @Override

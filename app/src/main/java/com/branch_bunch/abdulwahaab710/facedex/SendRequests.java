@@ -47,22 +47,21 @@ public class SendRequests extends AsyncTask<String, Void, String>{
         String result = new String();
         try {
             //File img = new File(String.valueOf(path));
-            //
-            // Log.e("File path", path[0]);
+            Log.e("File path", path[0]);
             Bitmap bitimg = BitmapFactory.decodeFile(path[0]);
             String base64img = encodeImage(bitimg);
-            //Log.e("base64", base64img);
+            Log.e("base64", base64img);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("image", base64img);
             String data = jsonObject.toString();
 
-            URL url = new URL("https://face-dex.herokuapp.com/recognize");
+            URL url = new URL("http://face-dex.herokuapp.com/recognize");
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
-//            connection.setFixedLengthStreamingMode(data.getBytes().length);
+            connection.setFixedLengthStreamingMode(data.getBytes().length);
             connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             connection.connect();
 
